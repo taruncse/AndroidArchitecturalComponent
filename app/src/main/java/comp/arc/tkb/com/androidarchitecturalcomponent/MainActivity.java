@@ -21,7 +21,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         clickCountText = findViewById(R.id.click_count_text);
 
-        viewModel = ViewModelProviders.of(this).get(ClickCounterViewModel.class);
+        LoggingClickCounterViewModelFactory factory =
+                new LoggingClickCounterViewModelFactory(new ClickLoggingInterceptor());
+
+        viewModel = ViewModelProviders.of(this, factory).get(LoggingClickCounterViewModel.class);
         displayClickCount(viewModel.getCount());
     }
 
