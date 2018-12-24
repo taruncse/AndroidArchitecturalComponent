@@ -16,9 +16,11 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ListView listView = (ListView) findViewById(R.id.list);
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        ListView listView = findViewById(R.id.list);
+        ProgressBar progressBar =  findViewById(R.id.progressbar);
         progressBar.setVisibility(View.VISIBLE);
+
+
         MainActivityViewModel model = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         model.getFruitList().observe(this, fruitlist -> {
             // update UI

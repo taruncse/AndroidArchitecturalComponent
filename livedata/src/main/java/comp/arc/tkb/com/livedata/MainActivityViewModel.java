@@ -15,32 +15,51 @@ import androidx.lifecycle.ViewModel;
 public class MainActivityViewModel extends ViewModel {
 
     private String TAG = MainActivityViewModel.class.getSimpleName();
-
+    Handler handler = new Handler(); // new handler
     private MutableLiveData<List<String>> fruitList;
-
+    int i = 0;
     LiveData<List<String>> getFruitList() {
         if (fruitList == null) {
             fruitList = new MutableLiveData<>();
             loadFruits();
+            callAgain();
         }
         return fruitList;
+
+
     }
+
+    private void callAgain(){
+
+        handler.postDelayed(runnable, 1000*20); // 10 mins int.
+    }
+
+    private Runnable runnable = () -> {
+
+        loadFruits();
+
+    };
 
     private void loadFruits() {
         // do async operation to fetch users
         Handler myHandler = new Handler();
         myHandler.postDelayed(() -> {
             List<String> fruitsStringList = new ArrayList<>();
-            fruitsStringList.add("Mango");
-            fruitsStringList.add("Apple");
-            fruitsStringList.add("Orange");
-            fruitsStringList.add("Banana");
-            fruitsStringList.add("Grapes");
+            fruitsStringList.add("Mango"+i);
+            fruitsStringList.add("Apple"+i);
+            fruitsStringList.add("Orange"+i);
+            fruitsStringList.add("Banana"+i);
+            fruitsStringList.add("Grapes"+i);
             long seed = System.nanoTime();
             Collections.shuffle(fruitsStringList, new Random(seed));
 
             fruitList.setValue(fruitsStringList);
-        }, 5000);
+            i++;
+        }, 2000);
+
+
+
+
 
     }
 
